@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Technooze_Tlog Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Technooze
+ * @package    Technooze_Tlog
+ * @copyright  Copyright (c) 2014 dltr.org
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * @category   Technooze
+ * @package    Technooze_Tlog
+ * @author     Technooze <info@technooze.com>
+ */
+-->
+<config>
+    <modules>
+        <Technooze_Tlog>
+            <version>0.0.1</version>
+        </Technooze_Tlog>
+    </modules>
+    <frontend>
+        <routers>
+            <tlog>
+                <use>standard</use>
+                <args>
+                    <module>Technooze_Tlog</module>
+                    <frontName>tlog</frontName>
+                </args>
+            </tlog>
+        </routers>
+        <translate>
+            <modules>
+                <Technooze_Tlog>
+                    <files>
+                        <default>Technooze_Tlog.csv</default>
+                    </files>
+                </Technooze_Tlog>
+            </modules>
+        </translate>
+          <layout>
+              <updates>
+                  <tlog module="Technooze_Tlog">
+                      <file>technooze_log.xml</file>
+                  </tlog>
+              </updates>
+          </layout>
+    </frontend>
+    <global>
+        <models>
+            <tlog>
+                <class>Technooze_Tlog_Model</class>
+                <resourceModel>tlog_mysql4</resourceModel>
+            </tlog>
+            <tlog_mysql4>
+                <class>Technooze_Tlog_Model_Mysql4</class>
+                <entities>
+                    <log>
+                        <table>technooze_tlog</table>
+                    </log>
+                </entities>
+            </tlog_mysql4>
+        </models>
+        <resources>
+            <technoozetlog_setup>
+                <setup>
+                    <module>Technooze_Tlog</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </technoozetlog_setup>
+            <tlog_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </tlog_write>
+            <tlog_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </tlog_read>
+        </resources>
+        <helpers>
+            <tlog><class>Technooze_Tlog_Helper</class></tlog>
+        </helpers>
+        <blocks>
+            <tlog>
+                <class>Technooze_Tlog_Block</class>
+            </tlog>
+        </blocks>
+    </global>
+    <admin>
+         <routers>
+            <tlogadmin>
+                <use>admin</use>
+                <args>
+                    <module>Technooze_Tlog</module>
+                    <frontName>tlogadmin</frontName>
+                </args>
+            </tlogadmin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+       	  <updates>
+       		<tlog>
+       		  <file>technooze_log.xml</file>
+       		</tlog>
+       	  </updates>
+       	</layout>
+        <menu>
+            <cms>
+                <children>
+                    <tlog translate="title" module="tlog">
+                        <title>Logs</title>
+                        <action>tlogadmin/adminhtml_log/</action>
+                    </tlog>
+                 </children>
+            </cms>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                  <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <cms>
+                            <children>
+                                <tlog>
+                                    <title>T-Logs</title>
+                                </tlog>
+                            </children>
+                        </cms>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Technooze_Tlog>
+                    <files>
+                        <default>Technooze_Tlog.csv</default>
+                    </files>
+                </Technooze_Tlog>
+            </modules>
+        </translate>
+        <events>
+            <tlog_adminhtml_grid_refreshlogs>
+                <observers>
+                    <tlog_get_log>
+                        <class>tlog/cron</class>
+                        <method>refreshLog</method>
+                    </tlog_get_log>
+                </observers>
+            </tlog_adminhtml_grid_refreshlogs>
+        </events>
+    </adminhtml>
+    <crontab>
+        <jobs>
+            <tlog_grablog>
+                <schedule><cron_expr>* */3 * * *</cron_expr></schedule>
+                <run><model>tlog/cron::grabLog</model></run>
+            </tlog_grablog>
+        </jobs>
+    </crontab>
+</config>
