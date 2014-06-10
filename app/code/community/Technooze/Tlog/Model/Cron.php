@@ -18,7 +18,7 @@
 /**
  * @category   Technooze
  * @package    Technooze_Tlog
- * @author     Technooze <info@technooze.com>
+ * @author     Technooze <info@technooze.com> @dbashyal
  */
 class Technooze_Tlog_Model_Cron{
 
@@ -135,7 +135,7 @@ class Technooze_Tlog_Model_Cron{
         $mail->setBodyHTML($text);
 
         $mail->setSubject('=?utf-8?B?' . base64_encode('New error log found!!! ' . Mage::getBaseUrl()) . '?=');
-        $mail->setFrom('log@acidgreen.com.au', 'error log');
+        $mail->setFrom('log@example.com.au', 'error log');
 
         try {
             $mail->send();
