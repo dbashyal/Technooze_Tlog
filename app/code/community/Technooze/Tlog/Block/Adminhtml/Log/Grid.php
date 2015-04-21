@@ -28,7 +28,7 @@ class Technooze_Tlog_Block_Adminhtml_Log_Grid extends Mage_Adminhtml_Block_Widge
         parent::__construct();
         $this->setId('logsGrid');
         $this->setDefaultSort('tlog_id');
-        $this->setDefaultDir('ASC');
+        $this->setDefaultDir('DESC');
         $this->setSaveParametersInSession(true);
     }
 
