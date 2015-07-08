@@ -166,7 +166,7 @@ class Technooze_Tlog_Adminhtml_LogController extends Mage_Adminhtml_Controller_A
 
     protected function _isAllowed()
     {
-	    return Mage::getSingleton('admin/session')->isAllowed('cms/log');
+	    return Mage::getSingleton('admin/session')->isAllowed('cms/tlog');
     }
 
     public function exportCsvAction() {
